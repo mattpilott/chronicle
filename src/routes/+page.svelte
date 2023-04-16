@@ -22,7 +22,7 @@
 	.row {
 		display: grid;
 		grid-auto-flow: column;
-		grid-auto-columns: minmax(30rem, 1fr);
+		grid-auto-columns: minmax(28rem, 1fr);
 		gap: 1rem;
 		padding: 1rem;
 		overflow: auto;
@@ -41,7 +41,7 @@
 		backdrop-filter: saturate(180%) blur(20px);
 		-webkit-backdrop-filter: saturate(180%) blur(20px);
 		border-bottom: 0.5px solid #666;
-		padding: 1rem 2rem;
+		padding: 1rem 1.5rem;
 		position: sticky;
 		top: 0;
 		z-index: 1;
@@ -58,10 +58,14 @@
 	}
 
 	.main {
-		padding: 1rem 2rem;
+		padding: 1rem 1.5rem;
 
 		&.hideH1 :global(h1:not(.title)) {
 			display: none;
+		}
+
+		:global(li) {
+			overflow-wrap: break-word;
 		}
 
 		:global(li p) {
@@ -71,7 +75,7 @@
 		:global(h2) {
 			background-color: hsl(240 2% 9%);
 			position: sticky;
-			top: 100px;
+			top: 90.5px;
 			z-index: 1;
 		}
 	}

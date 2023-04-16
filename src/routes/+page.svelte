@@ -22,7 +22,7 @@
 	.row {
 		display: grid;
 		grid-auto-flow: column;
-		grid-auto-columns: minmax(28rem, 1fr);
+		grid-auto-columns: minmax(min(28rem, 100%), 1fr);
 		gap: 1rem;
 		padding: 1rem;
 		overflow: auto;

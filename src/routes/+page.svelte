@@ -1,7 +1,24 @@
 <script>
 	import { marked } from 'marked'
+	import { invalidateAll } from '$app/navigation'
+	import { onMount } from 'svelte'
+	import { fly } from 'svelte/transition'
 
 	export let data
+
+	let loading
+
+	const refresh = async () => {
+		loading = true
+		document.hidden || (await invalidateAll())
+		loading = false
+	}
+
+	onMount(() => {
+		document.addEventListener('visibilitychange', refresh)
+
+		return () => document.removeEventListener('visibilitychange', refresh)
+	})
 </script>
 
 <section class="row">
@@ -17,6 +34,13 @@
 		</div>
 	{/each}
 </section>
+
+{#if loading}
+	<div class="loading" in:fly={{ y: 100 }} out:fly={{ y: -100, delay: 100000 }}>
+		<img class="spin" src="/load.gif" alt="loader" />
+		Loading...
+	</div>
+{/if}
 
 <style lang="scss">
 	.row {
@@ -78,5 +102,27 @@
 			top: 90.5px;
 			z-index: 1;
 		}
+	}
+
+	.loading {
+		align-items: center;
+		background-color: hsl(0 0% 0% / 0.2);
+		backdrop-filter: blur(40px);
+		border-radius: 20px;
+		box-shadow: 0 10px 40px hsl(0 0% 0% / 0.2), 0 2px 10px hsl(0 0% 0% / 0.2);
+		border: 0.5px solid hsl(0 0% 100% / 0.25);
+		display: flex;
+		inset: 50% 50% auto auto;
+		gap: 0.75rem;
+		padding: 1.25rem 1.75rem;
+		position: fixed;
+		transform: translate(-50%, -50%);
+		z-index: 1;
+	}
+
+	.spin {
+		height: 1.25rem;
+		mix-blend-mode: overlay;
+		width: 1.25rem;
 	}
 </style>

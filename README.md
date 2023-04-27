@@ -6,3 +6,7 @@
 -  Link to projects' github pages
 -  Add ability to add projects to the list
 -  Allow for custom layouts
+-  Support RSS
+-  Starred projects from github
+-  Github auth
+-

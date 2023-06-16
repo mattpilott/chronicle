@@ -1,6 +1,6 @@
 {
    "name": "starter-kit",
-   "version": "0.0.2",
+   "version": "0.2.0",
    "private": true,
    "scripts": {
       "dev": "vite dev",
@@ -10,11 +10,15 @@
       "format": "prettier --plugin-search-dir . --write ."
    },
    "devDependencies": {
+      "@auth/core": "^0.7.1",
+      "@auth/sveltekit": "^0.3.1",
       "@neuekit/reboot": "2.0.0-beta.2",
       "@neuekit/utils": "^2.2.4",
+      "@supabase/supabase-js": "^2.21.0",
       "@sveltejs/adapter-auto": "^2.0.1",
       "@sveltejs/kit": "^1.15.9",
       "autoprefixer": "^10.4.14",
+      "jsdom": "^22.1.0",
       "marked": "^4.3.0",
       "octokit": "^2.0.14",
       "postcss": "^8.4.23",

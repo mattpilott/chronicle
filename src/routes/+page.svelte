@@ -29,7 +29,11 @@
 				<small class="subtitle">{changelog ? 'Changelog' : 'Releases'}</small>
 			</div>
 			<div class="main" class:hideH1>
-				{@html marked(body)}
+				{#if body}
+					{@html marked(body)}
+				{:else}
+					Failed
+				{/if}
 			</div>
 		</div>
 	{/each}
@@ -45,9 +49,11 @@
 <style lang="scss">
 	.row {
 		display: grid;
-		grid-auto-flow: column;
-		grid-auto-columns: minmax(min(28rem, 100%), 1fr);
+		// grid-auto-flow: column;
+		// grid-auto-columns: minmax(min(28rem, 100%), 1fr);
 		gap: 1rem;
+		grid-template: repeat(2, minmax(0, 1fr)) / repeat(3, minmax(0, 1fr));
+		height: 100vh;
 		padding: 1rem;
 		overflow: auto;
 	}

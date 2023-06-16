@@ -1,5 +1,5 @@
 <script>
-	import '../app.scss'
+	import '../../app.scss'
 	import { page } from '$app/stores'
 </script>
 

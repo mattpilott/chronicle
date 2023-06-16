@@ -9,6 +9,7 @@ const { rest: { repos: { getContent, listReleases } } } = new Octokit({
 const githubs = [
 	{ owner: 'sveltejs', repo: 'kit', path: 'packages/kit/CHANGELOG.md', hideH1: true },
 	{ owner: 'sveltejs', repo: 'svelte', path: 'CHANGELOG.md', hideH1: true },
+	{ rss: 'https://webkit.org/rss', title: 'Webkit', href: 'https://webkit.org', per_page: 10 },
 	{ owner: 'storyblok', repo: 'storyblok-js', per_page: 10 },
 	{ owner: 'storyblok', repo: 'storyblok-svelte', per_page: 10 },
 	{
@@ -16,8 +17,7 @@ const githubs = [
 		title: 'Storyblok',
 		href: 'https://www.storyblok.com/changelog',
 		per_page: 10
-	},
-	{ rss: 'https://webkit.org/rss', title: 'Webkit', href: 'https://webkit.org', per_page: 10 }
+	}
 ]
 
 function summary(str, delimit = '\n## ', count = 10) {
@@ -50,7 +50,8 @@ export async function load() {
 					href: github.href,
 					body: data.map(i => i.body).join('\n\n'),
 					hideH1: false,
-					changelog: true
+					changelog: false,
+					rss: true
 				}
 			} else {
 				const { data } = github.path ? await getContent(github) : await listReleases(github)

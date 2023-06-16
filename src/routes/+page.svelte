@@ -22,11 +22,11 @@
 </script>
 
 <section class="row">
-	{#each data.items as { title, href, body, hideH1, changelog }}
+	{#each data.items as { title, href, body, hideH1, changelog, rss }}
 		<div class="col">
 			<div class="header">
 				<h1 class="title"><a {href} target="_blank">{title}</a></h1>
-				<small class="subtitle">{changelog ? 'Changelog' : 'Releases'}</small>
+				<small class="subtitle">{rss ? 'RSS' : changelog ? 'Changelog' : 'Releases'}</small>
 			</div>
 			<div class="main" class:hideH1>
 				{#if body}

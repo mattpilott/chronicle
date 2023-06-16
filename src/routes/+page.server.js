@@ -11,8 +11,13 @@ const githubs = [
 	{ owner: 'sveltejs', repo: 'svelte', path: 'CHANGELOG.md', hideH1: true },
 	{ owner: 'storyblok', repo: 'storyblok-js', per_page: 10 },
 	{ owner: 'storyblok', repo: 'storyblok-svelte', per_page: 10 },
-	{ rss: 'https://www.storyblok.com/rss/changelog', per_page: 10 },
-	{ rss: 'https://webkit.org/rss', per_page: 10 }
+	{
+		rss: 'https://www.storyblok.com/rss/changelog',
+		title: 'Storyblok',
+		href: 'https://www.storyblok.com/changelog',
+		per_page: 10
+	},
+	{ rss: 'https://webkit.org/rss', title: 'Webkit', href: 'https://webkit.org', per_page: 10 }
 ]
 
 function summary(str, delimit = '\n## ', count = 10) {
@@ -41,8 +46,8 @@ export async function load() {
 				})
 
 				return {
-					title: 'Storyblok Changelog',
-					href: 'https://www.storyblok.com/changelog',
+					title: github.title,
+					href: github.href,
 					body: data.map(i => i.body).join('\n\n'),
 					hideH1: false,
 					changelog: true

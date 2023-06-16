@@ -118,7 +118,7 @@
 		box-shadow: 0 10px 40px hsl(0 0% 0% / 0.2), 0 2px 10px hsl(0 0% 0% / 0.2);
 		border: 0.5px solid hsl(0 0% 100% / 0.25);
 		display: flex;
-		inset: 50% 50% auto auto;
+		inset: 50% auto auto 50%;
 		gap: 0.75rem;
 		padding: 1.25rem 1.75rem;
 		position: fixed;

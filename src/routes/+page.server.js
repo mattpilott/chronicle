@@ -8,7 +8,7 @@ const { rest: { repos: { getContent, listReleases } } } = new Octokit({
 
 const githubs = [
 	{ owner: 'sveltejs', repo: 'kit', path: 'packages/kit/CHANGELOG.md', hideH1: true },
-	{ owner: 'sveltejs', repo: 'svelte', path: 'CHANGELOG.md', hideH1: true },
+	{ owner: 'sveltejs', repo: 'svelte', path: 'packages/svelte/CHANGELOG.md', hideH1: true },
 	{ rss: 'https://webkit.org/rss', title: 'Webkit', href: 'https://webkit.org', per_page: 10 },
 	{ owner: 'storyblok', repo: 'storyblok-js', per_page: 10 },
 	{ owner: 'storyblok', repo: 'storyblok-svelte', per_page: 10 },

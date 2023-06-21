@@ -49,21 +49,27 @@
 <style lang="scss">
 	.row {
 		display: grid;
-		// grid-auto-flow: column;
-		// grid-auto-columns: minmax(min(28rem, 100%), 1fr);
-		gap: 1rem;
-		grid-template: repeat(2, minmax(0, 1fr)) / repeat(3, minmax(0, 1fr));
+		grid-auto-flow: column;
+		grid-auto-columns: minmax(min(28rem, 94%), 1fr);
 		height: 100vh;
-		padding: 1rem;
-		overflow: auto;
+
+		@include mq($from: tablet) {
+			grid-template: repeat(2, minmax(0, 1fr)) / repeat(3, minmax(0, 1fr));
+			gap: 1rem;
+			overflow: auto;
+			padding: 1rem;
+		}
 	}
 
 	.col {
 		background-color: hsl(240 2% 9%);
-		border-radius: 24px;
 		border: 0.5px solid hsl(0 0% 100% / 0.15);
-		max-height: calc(100vh - 2rem);
 		overflow: auto;
+
+		@include mq($from: tablet) {
+			border-radius: 24px;
+			max-height: calc(100vh - 2rem);
+		}
 	}
 
 	.header {
@@ -78,7 +84,12 @@
 	}
 
 	.title {
+		font-size: 1.5rem;
 		margin: 0;
+
+		@include mq($from: tablet) {
+			font-size: 1.625rem;
+		}
 	}
 
 	.subtitle {

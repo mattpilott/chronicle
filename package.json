@@ -1,6 +1,6 @@
 {
    "name": "starter-kit",
-   "version": "0.2.4",
+   "version": "0.2.5",
    "private": true,
    "scripts": {
       "dev": "vite dev",
@@ -10,7 +10,7 @@
       "format": "prettier --plugin-search-dir . --write ."
    },
    "devDependencies": {
-      "@auth/core": "^0.8.3",
+      "@auth/core": "^0.8.4",
       "@auth/sveltekit": "^0.3.3",
       "@neuekit/reboot": "2.0.0-beta.2",
       "@neuekit/utils": "^2.4.2",
@@ -24,7 +24,7 @@
       "postcss": "^8.4.24",
       "prettier": "^2.8.8",
       "prettier-plugin-svelte": "^2.10.1",
-      "sass": "^1.63.5",
+      "sass": "^1.63.6",
       "sass-mq": "^6.0.0",
       "svelte": "^3.59.2",
       "svelte-preprocess": "^5.0.4",

@@ -40,7 +40,7 @@
 </section>
 
 {#if loading}
-	<div class="loading" in:fly={{ y: 100 }} out:fly={{ y: -100, delay: 500 }}>
+	<div class="loading" in:fly|global={{ y: 100 }} out:fly|global={{ y: -100, delay: 500 }}>
 		<img class="spin" src="/load.gif" alt="loader" />
 		Loading...
 	</div>

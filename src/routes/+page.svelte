@@ -49,7 +49,6 @@
 <style lang="scss">
 	.row {
 		display: grid;
-		grid-auto-flow: column;
 		grid-auto-columns: minmax(min(28rem, 94%), 1fr);
 		height: 100vh;
 

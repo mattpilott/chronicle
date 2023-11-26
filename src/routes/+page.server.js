@@ -32,26 +32,30 @@ export async function load() {
 	const items = await Promise.all(
 		githubs.map(async github => {
 			if (github.rss) {
-				const xml = await fetch(github.rss).then(r => r.text())
-				// prettier-ignore
-				const { window: { document } } = new JSDOM(xml, { contentType: 'text/xml' })
-				const data = []
+				try {
+					const xml = await fetch(github.rss).then(r => r.text())
+					// prettier-ignore
+					const { window: { document } } = new JSDOM(xml, { contentType: 'text/xml' })
+					const data = []
 
-				document.querySelectorAll('item').forEach(item => {
-					data.push({
-						body: item.querySelector('description').textContent,
-						href: item.querySelector('link').textContent,
-						title: item.querySelector('title').textContent
+					document.querySelectorAll('item').forEach(item => {
+						data.push({
+							body: item.querySelector('description').textContent,
+							href: item.querySelector('link').textContent,
+							title: item.querySelector('title').textContent
+						})
 					})
-				})
 
-				return {
-					title: github.title,
-					href: github.href,
-					body: data.map(i => i.body).join('\n\n'),
-					hideH1: false,
-					changelog: false,
-					rss: true
+					return {
+						title: github.title,
+						href: github.href,
+						body: data.map(i => i.body).join('\n\n'),
+						hideH1: false,
+						changelog: false,
+						rss: true
+					}
+				} catch (e) {
+					return
 				}
 			} else {
 				const { data } = github.path ? await getContent(github) : await listReleases(github)

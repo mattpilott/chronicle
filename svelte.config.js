@@ -2,7 +2,7 @@ import adapter from '@sveltejs/adapter-auto'
 import preprocess from 'svelte-preprocess'
 import autoprefixer from 'autoprefixer'
 import { readFileSync } from 'fs'
-import { vitePreprocess } from '@sveltejs/kit/vite'
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte'
 
 const prependData = readFileSync(new URL('src/library/prepend.scss', import.meta.url), 'utf8')
 

@@ -1,5 +1,5 @@
 import { SvelteKitAuth } from '@auth/sveltekit'
-import GitHub from '@auth/core/providers/github'
+import GitHub from '@auth/sveltekit/providers/github'
 import { GITHUB_ID, GITHUB_SECRET } from '$env/static/private'
 import { sequence } from '@sveltejs/kit/hooks'
 
@@ -25,4 +25,4 @@ const store_token = async ({ event, resolve }) => {
 	return await resolve(event)
 }
 
-export const handle = sequence(auth_handle, store_token)
+export const handle = sequence(auth_handle.handle, store_token)

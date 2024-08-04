@@ -6,7 +6,7 @@
 
 	export let data
 
-	console.log(data)
+	// console.log(data)
 
 	let loading
 
@@ -28,12 +28,20 @@
 		{#if item}
 			<div class="col">
 				<div class="header">
-					<h1 class="title"><a href="{item.href}" target="_blank">{item.title}</a></h1>
+					<h1 class="title"><a href={item.href} target="_blank">{item.title}</a></h1>
 					<small class="subtitle">{item.rss ? 'RSS' : item.changelog ? 'Changelog' : 'Releases'}</small>
 				</div>
 				<div class="main" class:hideH1={item.hideH1}>
 					{#if item.body}
 						{@html marked(item.body)}
+					{:else if item.content}
+						{#each item.content as content}
+							<div>
+								<h2><a href={content.href} target="_blank">{content.title}</a></h2>
+								<div>{content.body}</div>
+								<br />
+							</div>
+						{/each}
 					{:else}
 						Failed
 					{/if}
@@ -54,7 +62,7 @@
 	.row {
 		display: grid;
 		grid-auto-columns: minmax(94%, 1fr);
-		grid-auto-flow: column;
+		grid-auto-flow: row;
 		height: 100vh;
 
 		@include mq($from: tablet) {
@@ -84,7 +92,7 @@
 		padding: 1rem 1.5rem;
 		position: sticky;
 		top: 0;
-		z-index: 1;
+		z-index: 2;
 	}
 
 	.title {
@@ -123,6 +131,10 @@
 			top: 90.5px;
 			z-index: 1;
 		}
+
+		:global(h2 a) {
+			color: white;
+		}
 	}
 
 	.loading {
@@ -130,7 +142,9 @@
 		background-color: hsl(0 0% 0% / 0.2);
 		backdrop-filter: blur(40px);
 		border-radius: 20px;
-		box-shadow: 0 10px 40px hsl(0 0% 0% / 0.2), 0 2px 10px hsl(0 0% 0% / 0.2);
+		box-shadow:
+			0 10px 40px hsl(0 0% 0% / 0.2),
+			0 2px 10px hsl(0 0% 0% / 0.2);
 		border: 0.5px solid hsl(0 0% 100% / 0.25);
 		display: flex;
 		inset: 50% auto auto 50%;

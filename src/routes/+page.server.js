@@ -2,12 +2,12 @@ import { Octokit } from 'octokit'
 import rss2js from 'rss-to-json'
 
 // prettier-ignore
-const { rest: { repos: { getContent, listReleases } } } = new Octokit({
+const { rest: { repos: { getContent, listReleases }, issues: { getMilestone } } } = new Octokit({
 	auth: import.meta.env.VITE_KEY
 })
 
 const githubs = [
-	{ owner: 'sveltejs', repo: 'svelte', path: 'packages/svelte/CHANGELOG.md', hideH1: true },
+	{ owner: 'sveltejs', repo: 'svelte', path: 'packages/svelte/CHANGELOG.md', hideH1: true, milestone_number: 9 },
 	{ owner: 'sveltejs', repo: 'kit', path: 'packages/kit/CHANGELOG.md', hideH1: true },
 	{
 		rss: 'https://www.figma.com/release-notes/feed/atom.xml',
@@ -62,6 +62,7 @@ export async function load() {
 				}
 			} else {
 				const { data } = github.path ? await getContent(github) : await listReleases(github)
+				const { data: mile } = github.milestone_number ? await getMilestone(github) : { data: false }
 
 				return {
 					title: `@${github.owner}/${github.repo}`,
@@ -70,7 +71,13 @@ export async function load() {
 						? summary(fromB64(data.content), github.per_page)
 						: data.map(i => i.body).join('\n\n'),
 					hideH1: github.hideH1,
-					changelog: github.path
+					changelog: github.path,
+					mile: mile && {
+						title: mile.title,
+						open: mile.open_issues,
+						closed: mile.closed_issues,
+						percent: Math.floor((mile.closed_issues / (mile.open_issues + mile.closed_issues)) * 100)
+					}
 				}
 			}
 		})

@@ -9,6 +9,7 @@
 	// console.log(data)
 
 	let loading
+	let mounted
 
 	const refresh = async () => {
 		loading = true
@@ -17,6 +18,7 @@
 	}
 
 	onMount(() => {
+		mounted = true
 		document.addEventListener('visibilitychange', refresh)
 
 		return () => document.removeEventListener('visibilitychange', refresh)
@@ -28,8 +30,25 @@
 		{#if item}
 			<div class="col">
 				<div class="header">
-					<h1 class="title"><a href={item.href} target="_blank">{item.title}</a></h1>
-					<small class="subtitle">{item.rss ? 'RSS' : item.changelog ? 'Changelog' : 'Releases'}</small>
+					<div>
+						<h1 class="title"><a href={item.href} target="_blank">{item.title}</a></h1>
+						<small class="subtitle">{item.rss ? 'RSS' : item.changelog ? 'Changelog' : 'Releases'}</small>
+					</div>
+					<div>
+						{#if item.mile}
+							<progress
+								class="progress"
+								class:initial={!mounted}
+								value={item.mile.percent}
+								min={0}
+								max={100}
+							></progress>
+							<small class="subtitle">
+								{item.mile.percent}%&nbsp;&nbsp;&nbsp;&nbsp;O {item.mile.open}&nbsp;&nbsp;&nbsp;&nbsp;C {item
+									.mile.closed}
+							</small>
+						{/if}
+					</div>
 				</div>
 				<div class="main" class:hideH1={item.hideH1}>
 					{#if item.body}
@@ -85,10 +104,13 @@
 	}
 
 	.header {
+		align-items: end;
 		background-color: hsl(240 2% 9% / 0.8);
 		backdrop-filter: saturate(180%) blur(20px);
 		-webkit-backdrop-filter: saturate(180%) blur(20px);
 		border-bottom: 0.5px solid #666;
+		display: flex;
+		justify-content: space-between;
 		padding: 1rem 1.5rem;
 		position: sticky;
 		top: 0;
@@ -108,6 +130,33 @@
 		color: #666;
 		font-style: italic;
 		font-weight: 500;
+	}
+
+	.progress {
+		appearance: none;
+		background-color: hsl(0 0% 0%);
+		border: 0;
+		border-radius: 0.5rem;
+		height: 0.375rem;
+		margin: 0 0 0.5rem;
+		width: 100%;
+
+		&::-webkit-progress-bar {
+			background-color: hsl(0 0% 25%);
+			border: 1px solid black;
+			border-radius: 0.5rem;
+		}
+
+		&::-webkit-progress-value {
+			background-color: hsl(150 100% 40%);
+			box-shadow: 0 1px 12px hsl(150 100% 50% / 0.75);
+			border-radius: 0.5rem;
+			transition: inline-size 1s 0.25s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+		}
+
+		&.initial::-webkit-progress-value {
+			inline-size: 0% !important;
+		}
 	}
 
 	.main {
@@ -152,7 +201,7 @@
 		padding: 1.25rem 1.75rem;
 		position: fixed;
 		transform: translate(-50%, -50%);
-		z-index: 1;
+		z-index: 10;
 	}
 
 	.spin {

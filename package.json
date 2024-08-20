@@ -14,15 +14,15 @@
 		"@auth/sveltekit": "^1.4.2",
 		"@neuekit/reboot": "2.0.0",
 		"@neuekit/utils": "^2.5.3",
-		"@supabase/supabase-js": "^2.45.0",
-		"@sveltejs/adapter-auto": "^3.2.2",
-		"@sveltejs/kit": "^2.5.20",
+		"@supabase/supabase-js": "^2.45.1",
+		"@sveltejs/adapter-auto": "^3.2.4",
+		"@sveltejs/kit": "^2.5.24",
 		"@sveltejs/vite-plugin-svelte": "^3.1.1",
 		"autoprefixer": "^10.4.20",
 		"jsdom": "^24.1.1",
 		"marked": "^13.0.3",
 		"octokit": "^4.0.2",
-		"postcss": "^8.4.40",
+		"postcss": "^8.4.41",
 		"prettier": "^3.3.3",
 		"prettier-plugin-svelte": "^3.2.6",
 		"rss-to-json": "^2.1.1",
@@ -30,7 +30,7 @@
 		"sass-mq": "^6.0.0",
 		"svelte": "^4.2.18",
 		"svelte-preprocess": "^6.0.2",
-		"vite": "^5.3.5"
+		"vite": "^5.4.2"
 	},
 	"type": "module"
 }

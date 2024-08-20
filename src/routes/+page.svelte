@@ -43,9 +43,9 @@
 								min={0}
 								max={100}
 							></progress>
-							<small class="subtitle">
-								{item.mile.percent}%&nbsp;&nbsp;&nbsp;&nbsp;O {item.mile.open}&nbsp;&nbsp;&nbsp;&nbsp;C {item
-									.mile.closed}
+							<small class="subtitle" title="Title, Open, Closed, Percent">
+								{item.mile.title}&nbsp;&nbsp;&nbsp;&nbsp;O {item.mile.open}&nbsp;&nbsp;&nbsp;&nbsp;C {item
+									.mile.closed}&nbsp;&nbsp;&nbsp;&nbsp;{item.mile.percent}%
 							</small>
 						{/if}
 					</div>
@@ -71,9 +71,9 @@
 </section>
 
 {#if loading}
-	<div class="loading" in:fly|global={{ y: 100 }} out:fly|global={{ y: -100, delay: 500 }}>
+	<div class="loading" in:fly|global={{ y: 50 }} out:fly|global={{ y: -50, delay: 500 }}>
 		<img class="spin" src="/load.gif" alt="loader" />
-		Loading...
+		Fetching...
 	</div>
 {/if}
 
@@ -198,7 +198,7 @@
 		display: flex;
 		inset: 50% auto auto 50%;
 		gap: 0.75rem;
-		padding: 1.25rem 1.75rem;
+		padding: 1.5rem 2rem;
 		position: fixed;
 		transform: translate(-50%, -50%);
 		z-index: 10;

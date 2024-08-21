@@ -9,13 +9,13 @@ const { rest: { repos: { getContent, listReleases }, issues: { getMilestone } } 
 const githubs = [
 	{ owner: 'sveltejs', repo: 'svelte', path: 'packages/svelte/CHANGELOG.md', hideH1: true, milestone_number: 9 },
 	{ owner: 'sveltejs', repo: 'kit', path: 'packages/kit/CHANGELOG.md', hideH1: true, milestone_number: 7 },
+	{ owner: 'vitejs', repo: 'vite', path: 'packages/vite/CHANGELOG.md', hideH1: true, milestone_number: 17 },
 	{
 		rss: 'https://www.figma.com/release-notes/feed/atom.xml',
 		title: 'Figma',
 		href: 'https://www.figma.com/release-notes',
 		per_page: 10
 	},
-	{ owner: 'storyblok', repo: 'storyblok-js', per_page: 10 },
 	{
 		rss: 'https://www.storyblok.com/rss/changelog',
 		title: 'Storyblok',

@@ -43,10 +43,12 @@
 								min={0}
 								max={100}
 							></progress>
-							<small class="subtitle" title="Title, Open, Closed, Percent">
-								{item.mile.title}&nbsp;&nbsp;&nbsp;&nbsp;O {item.mile.open}&nbsp;&nbsp;&nbsp;&nbsp;C {item
-									.mile.closed}&nbsp;&nbsp;&nbsp;&nbsp;{item.mile.percent}%
-							</small>
+							<a class="link" href="{item.href}/milestone/{item.mile.number}" target="_blank">
+								<small class="subtitle" title="Title, Open, Closed, Percent">
+									{item.mile.title}&nbsp;&nbsp;&nbsp;&nbsp;O {item.mile.open}&nbsp;&nbsp;&nbsp;&nbsp;C {item
+										.mile.closed}&nbsp;&nbsp;&nbsp;&nbsp;{item.mile.percent}%
+								</small>
+							</a>
 						{/if}
 					</div>
 				</div>
@@ -130,6 +132,11 @@
 		color: #666;
 		font-style: italic;
 		font-weight: 500;
+		transition: color 0.25s ease;
+	}
+
+	.link:hover .subtitle {
+		color: #ccc;
 	}
 
 	.progress {

@@ -73,6 +73,7 @@ export async function load() {
 					hideH1: github.hideH1,
 					changelog: github.path,
 					mile: mile && {
+						number: github.milestone_number,
 						title: mile.title,
 						open: mile.open_issues,
 						closed: mile.closed_issues,

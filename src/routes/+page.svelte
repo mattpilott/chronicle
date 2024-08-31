@@ -30,11 +30,11 @@
 		{#if item}
 			<div class="col">
 				<div class="header">
-					<div>
+					<div class="over">
 						<h1 class="title"><a href={item.href} target="_blank">{item.title}</a></h1>
 						<small class="subtitle">{item.rss ? 'RSS' : item.changelog ? 'Changelog' : 'Releases'}</small>
 					</div>
-					<div>
+					<div class="under">
 						{#if item.mile}
 							<progress
 								class="progress"
@@ -83,12 +83,13 @@
 	.row {
 		display: grid;
 		grid-auto-columns: minmax(94%, 1fr);
-		grid-auto-flow: row;
+		grid-auto-flow: column;
 		height: 100vh;
 
 		@include mq($from: tablet) {
-			grid-template: repeat(2, minmax(0, 1fr)) / repeat(3, minmax(0, 1fr));
 			gap: 1rem;
+			grid-auto-flow: row;
+			grid-template: repeat(2, minmax(0, 1fr)) / repeat(3, minmax(0, 1fr));
 			overflow: auto;
 			padding: 1rem;
 		}
@@ -112,19 +113,35 @@
 		-webkit-backdrop-filter: saturate(180%) blur(20px);
 		border-bottom: 0.5px solid #666;
 		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
 		justify-content: space-between;
 		padding: 1rem 1.5rem;
 		position: sticky;
 		top: 0;
 		z-index: 2;
+
+		@include mq($from: tablet) {
+			flex-direction: row;
+			gap: 0;
+		}
+	}
+
+	.over,
+	.under {
+		width: 100%;
+
+		@include mq($from: tablet) {
+			width: auto;
+		}
 	}
 
 	.title {
-		font-size: 1.5rem;
+		font-size: 1.375rem;
 		margin: 0;
 
 		@include mq($from: tablet) {
-			font-size: 1.625rem;
+			font-size: 1.5rem;
 		}
 	}
 
@@ -145,8 +162,11 @@
 		border: 0;
 		border-radius: 0.5rem;
 		height: 0.375rem;
-		margin: 0 0 0.5rem;
 		width: 100%;
+
+		@include mq($from: tablet) {
+			margin: 0 0 0.5rem;
+		}
 
 		&::-webkit-progress-bar {
 			background-color: hsl(0 0% 25%);

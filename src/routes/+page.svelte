@@ -207,7 +207,7 @@
 		:global(h2) {
 			background-color: hsl(240 2% 9%);
 			position: sticky;
-			top: 90.5px;
+			top: 87px;
 			z-index: 1;
 		}
 

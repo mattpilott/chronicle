@@ -54,7 +54,10 @@
 				</div>
 				<div class="main" class:hideH1={item.hideH1}>
 					{#if item.body}
-						{@html marked(item.body)}
+						{@const text = item.body
+							.replace(/<template>/g, '&lt;template&gt;')
+							.replace(/<\/template>/g, '&lt;/template&gt;')}
+						{@html marked(text)}
 					{:else if item.content}
 						{#each item.content as content}
 							<div>

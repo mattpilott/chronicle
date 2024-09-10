@@ -9,7 +9,7 @@ const { rest: { repos: { getContent, listReleases }, issues: { getMilestone } } 
 const githubs = [
 	{ owner: 'sveltejs', repo: 'svelte', path: 'packages/svelte/CHANGELOG.md', hideH1: true, milestone_number: 9 },
 	{ owner: 'sveltejs', repo: 'kit', path: 'packages/kit/CHANGELOG.md', hideH1: true, milestone_number: 7 },
-	{ owner: 'vitejs', repo: 'vite', path: 'packages/vite/CHANGELOG.md', hideH1: true, milestone_number: 17 },
+	{ owner: 'vitejs', repo: 'vite', path: 'packages/vite/CHANGELOG.md', hideH1: true, milestone_number: 16 },
 	{
 		rss: 'https://www.figma.com/release-notes/feed/atom.xml',
 		title: 'Figma',
@@ -63,13 +63,14 @@ export async function load() {
 			} else {
 				const { data } = github.path ? await getContent(github) : await listReleases(github)
 				const { data: mile } = github.milestone_number ? await getMilestone(github) : { data: false }
+				const body = github.path
+					? summary(fromB64(data.content), github.per_page)
+					: data.map(i => i.body).join('\n\n')
 
 				return {
 					title: `@${github.owner}/${github.repo}`,
 					href: `https://github.com/${github.owner}/${github.repo}`,
-					body: github.path
-						? summary(fromB64(data.content), github.per_page)
-						: data.map(i => i.body).join('\n\n'),
+					body,
 					hideH1: github.hideH1,
 					changelog: github.path,
 					mile: mile && {

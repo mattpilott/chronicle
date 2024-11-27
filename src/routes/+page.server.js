@@ -8,21 +8,21 @@ const { rest: { repos: { getContent, listReleases }, issues: { getMilestone } } 
 
 const githubs = [
 	{ owner: 'sveltejs', repo: 'svelte', path: 'packages/svelte/CHANGELOG.md', hideH1: true, milestone_number: 9 },
-	{ owner: 'sveltejs', repo: 'kit', path: 'packages/kit/CHANGELOG.md', hideH1: true, milestone_number: 7 },
-	{ owner: 'vitejs', repo: 'vite', path: 'packages/vite/CHANGELOG.md', hideH1: true, milestone_number: 17 },
+	{ owner: 'sveltejs', repo: 'kit', path: 'packages/kit/CHANGELOG.md', hideH1: true, milestone_number: 8 },
+	{ owner: 'vitejs', repo: 'vite', path: 'packages/vite/CHANGELOG.md', hideH1: true, milestone_number: 22 },
 	{
 		rss: 'https://www.figma.com/release-notes/feed/atom.xml',
 		title: 'Figma',
 		href: 'https://www.figma.com/release-notes',
-		per_page: 10
+		per_page: 8
 	},
 	{
 		rss: 'https://www.storyblok.com/rss/changelog',
 		title: 'Storyblok',
 		href: 'https://www.storyblok.com/changelog',
-		per_page: 10
+		per_page: 8
 	},
-	{ rss: 'https://webkit.org/rss', title: 'Webkit', href: 'https://webkit.org', per_page: 10 }
+	{ rss: 'https://webkit.org/rss', title: 'Webkit', href: 'https://webkit.org', per_page: 8 }
 ]
 
 function summary(str, delimit = '\n## ', count = 10) {

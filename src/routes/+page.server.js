@@ -7,9 +7,9 @@ const { rest: { repos: { getContent, listReleases }, issues: { getMilestone } } 
 })
 
 const githubs = [
-	{ owner: 'sveltejs', repo: 'svelte', path: 'packages/svelte/CHANGELOG.md', hideH1: true, milestone_number: 8 },
+	{ owner: 'sveltejs', repo: 'svelte', path: 'packages/svelte/CHANGELOG.md', hideH1: true, milestone_number: 10 },
 	{ owner: 'sveltejs', repo: 'kit', path: 'packages/kit/CHANGELOG.md', hideH1: true, milestone_number: 7 },
-	{ owner: 'vitejs', repo: 'vite', path: 'packages/vite/CHANGELOG.md', hideH1: true, milestone_number: 22 },
+	{ owner: 'vitejs', repo: 'vite', path: 'packages/vite/CHANGELOG.md', hideH1: true, milestone_number: 23 },
 	{
 		rss: 'https://www.figma.com/release-notes/feed/atom.xml',
 		title: 'Figma',

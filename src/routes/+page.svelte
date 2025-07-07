@@ -53,13 +53,14 @@
 					</div>
 				</div>
 				<div class="main" class:hideH1={item.hideH1}>
+					<div class="date">{item?.lastModified}</div>
 					{#if item.body}
 						{@const text = item.body
 							.replace(/<template>/g, '&lt;template&gt;')
 							.replace(/<\/template>/g, '&lt;/template&gt;')}
 						{@html marked(text)}
 					{:else if item.content}
-						{#each item.content as content}
+						{#each item.content as content, i}
 							<div>
 								<h2><a href={content.href} target="_blank">{content.title}</a></h2>
 								<div>{content.body}</div>

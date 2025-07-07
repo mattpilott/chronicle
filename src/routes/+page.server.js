@@ -2,12 +2,19 @@ import { Octokit } from 'octokit'
 import rss2js from 'rss-to-json'
 
 // prettier-ignore
-const { rest: { repos: { getContent, listReleases }, issues: { getMilestone } } } = new Octokit({
+const { rest: { repos: { getContent, listReleases, listCommits }, issues: { getMilestone } } } = new Octokit({
 	auth: import.meta.env.VITE_KEY
 })
 
 const githubs = [
-	{ owner: 'sveltejs', repo: 'svelte', path: 'packages/svelte/CHANGELOG.md', hideH1: true, milestone_number: 10 },
+	{
+		owner: 'sveltejs',
+		repo: 'svelte',
+		path: 'packages/svelte/CHANGELOG.md',
+		hideH1: true,
+		milestone_number: 10,
+		log: true
+	},
 	{ owner: 'sveltejs', repo: 'kit', path: 'packages/kit/CHANGELOG.md', hideH1: true, milestone_number: 7 },
 	{ owner: 'vitejs', repo: 'vite', path: 'packages/vite/CHANGELOG.md', hideH1: true, milestone_number: 23 },
 	{
@@ -45,7 +52,8 @@ export async function load() {
 						data.push({
 							body: item.description || item.content,
 							href: item.link,
-							title: item.title
+							title: item.title,
+							date: item.pubDate || item.updated || null // <-- publication date for RSS items
 						})
 					})
 
@@ -61,16 +69,36 @@ export async function load() {
 					return
 				}
 			} else {
+				// Fetch changelog content or releases
 				const { data } = github.path ? await getContent(github) : await listReleases(github)
+
+				// Fetch latest commit for last modified date
+				let lastModified = null
+				if (github.path) {
+					try {
+						const { data: commits } = await listCommits({
+							owner: github.owner,
+							repo: github.repo,
+							path: github.path,
+							per_page: 1
+						})
+						lastModified = commits[0]?.commit?.committer?.date || null
+					} catch (e) {
+						lastModified = null
+					}
+				}
+
 				const { data: mile } = github.milestone_number ? await getMilestone(github) : { data: false }
 				const body = github.path
 					? summary(fromB64(data.content), github.per_page)
 					: data.map(i => i.body).join('\n\n')
 
+				if (github.log) console.log(lastModified)
 				return {
 					title: `@${github.owner}/${github.repo}`,
 					href: `https://github.com/${github.owner}/${github.repo}`,
 					body,
+					lastModified, // <-- last modified date from latest commit
 					hideH1: github.hideH1,
 					changelog: github.path,
 					mile: mile && {

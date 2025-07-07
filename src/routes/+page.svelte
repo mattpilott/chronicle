@@ -3,6 +3,7 @@
 	import { invalidateAll } from '$app/navigation'
 	import { onMount } from 'svelte'
 	import { fly } from 'svelte/transition'
+	import { formatDate } from 'kitto'
 
 	export let data
 
@@ -53,7 +54,9 @@
 					</div>
 				</div>
 				<div class="main" class:hideH1={item.hideH1}>
-					<div class="date">{item?.lastModified}</div>
+					{#if item?.lastModified}
+						<div class="date">{formatDate("{Do} {MMMM} '{YY}", item.lastModified)}</div>
+					{/if}
 					{#if item.body}
 						{@const text = item.body
 							.replace(/<template>/g, '&lt;template&gt;')
@@ -215,6 +218,16 @@
 		:global(h2 a) {
 			color: white;
 		}
+	}
+
+	.date {
+		font-size: 0.875rem;
+		margin-bottom: -2.5rem;
+		opacity: 0.5;
+		position: sticky;
+		text-align: right;
+		top: 90px;
+		z-index: 2;
 	}
 
 	.loading {

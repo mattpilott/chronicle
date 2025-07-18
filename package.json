@@ -1,6 +1,6 @@
 {
 	"name": "chronicle",
-	"version": "0.7.0",
+	"version": "0.7.1",
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
@@ -12,14 +12,14 @@
 	"devDependencies": {
 		"@auth/core": "^0.40.0",
 		"@auth/sveltekit": "^1.10.0",
-		"@supabase/supabase-js": "^2.50.3",
+		"@supabase/supabase-js": "^2.52.0",
 		"@sveltejs/adapter-auto": "^6.0.1",
-		"@sveltejs/kit": "^2.22.2",
-		"@sveltejs/vite-plugin-svelte": "^5.1.0",
+		"@sveltejs/kit": "^2.25.0",
+		"@sveltejs/vite-plugin-svelte": "^6.1.0",
 		"autoprefixer": "^10.4.21",
 		"jsdom": "^26.1.0",
 		"kitto": "^1.0.0-rc.12",
-		"marked": "^16.0.0",
+		"marked": "^16.1.0",
 		"octokit": "^5.0.3",
 		"postcss": "^8.5.6",
 		"prettier": "^3.6.2",
@@ -27,9 +27,9 @@
 		"rss-to-json": "^2.1.1",
 		"sass": "^1.89.2",
 		"sass-mq": "^7.0.0",
-		"svelte": "^5.35.3",
+		"svelte": "^5.36.7",
 		"svelte-preprocess": "^6.0.3",
-		"vite": "^7.0.2"
+		"vite": "^7.0.5"
 	},
 	"type": "module"
 }

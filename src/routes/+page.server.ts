@@ -1,3 +1,4 @@
+import type { PageServerLoad } from './$types'
 import { Octokit } from 'octokit'
 import rss2js from 'rss-to-json'
 
@@ -40,7 +41,7 @@ function fromB64(str) {
 	return Buffer.from(str, 'base64').toString()
 }
 
-export async function load() {
+export const load = (async () => {
 	const items = await Promise.all(
 		githubs.map(async github => {
 			if (github.rss) {
@@ -114,4 +115,4 @@ export async function load() {
 	)
 
 	return { items }
-}
+}) satisfies PageServerLoad

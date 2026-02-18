@@ -1,16 +1,16 @@
-<script>
+<script lang="ts">
 	import { marked } from 'marked'
 	import { invalidateAll } from '$app/navigation'
 	import { onMount } from 'svelte'
 	import { fly } from 'svelte/transition'
 	import { formatDate } from 'kitto'
 
-	export let data
+	let { data } = $props()
 
 	// console.log(data)
 
-	let loading
-	let mounted
+	let loading = $state(false)
+	let mounted = $state(false)
 
 	const refresh = async () => {
 		loading = true
@@ -27,7 +27,7 @@
 </script>
 
 <section class="row">
-	{#each data.items as item}
+	{#each data?.items as item (item)}
 		{#if item}
 			<div class="col">
 				<div class="header">
@@ -86,14 +86,14 @@
 	</div>
 {/if}
 
-<style lang="scss">
+<style lang="css">
 	.row {
 		display: grid;
 		grid-auto-columns: minmax(94%, 1fr);
 		grid-auto-flow: column;
 		height: 100vh;
 
-		@include mq($from: tablet) {
+		@media (--from-tablet) {
 			gap: 1rem;
 			grid-auto-flow: row;
 			grid-template: repeat(2, minmax(0, 1fr)) / repeat(3, minmax(0, 1fr));
@@ -107,7 +107,7 @@
 		border: 0.5px solid hsl(0 0% 100% / 0.15);
 		overflow: auto;
 
-		@include mq($from: tablet) {
+		@media (--from-tablet) {
 			border-radius: 24px;
 			max-height: calc(100vh - 2rem);
 		}
@@ -128,7 +128,7 @@
 		top: 0;
 		z-index: 2;
 
-		@include mq($from: tablet) {
+		@media (--from-tablet) {
 			flex-direction: row;
 			gap: 0;
 		}
@@ -138,7 +138,7 @@
 	.under {
 		width: 100%;
 
-		@include mq($from: tablet) {
+		@media (--from-tablet) {
 			width: auto;
 		}
 	}
@@ -147,7 +147,7 @@
 		font-size: 1.375rem;
 		margin: 0;
 
-		@include mq($from: tablet) {
+		@media (--from-tablet) {
 			font-size: 1.5rem;
 		}
 	}
@@ -171,7 +171,7 @@
 		height: 0.375rem;
 		width: 100%;
 
-		@include mq($from: tablet) {
+		@media (--from-tablet) {
 			margin: 0 0 0.5rem;
 		}
 
@@ -200,23 +200,25 @@
 			display: none;
 		}
 
-		:global(li) {
-			overflow-wrap: break-word;
-		}
+		:global {
+			li {
+				overflow-wrap: break-word;
+			}
 
-		:global(li p) {
-			margin: 0;
-		}
+			li p {
+				margin: 0;
+			}
 
-		:global(h2) {
-			background-color: hsl(240 2% 9%);
-			position: sticky;
-			top: 87px;
-			z-index: 1;
-		}
+			h2 {
+				background-color: hsl(240 2% 9%);
+				position: sticky;
+				top: 87px;
+				z-index: 1;
+			}
 
-		:global(h2 a) {
-			color: white;
+			h2 a {
+				color: white;
+			}
 		}
 	}
 

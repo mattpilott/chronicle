@@ -1,6 +1,6 @@
 import devtoolsJson from 'vite-plugin-devtools-json'
 import { sveltekit } from '@sveltejs/kit/vite'
-import { defineConfig } from 'vite'
+import { defineConfig, createLogger } from 'vite'
 import { readFileSync } from 'fs'
 import { composeVisitors } from 'lightningcss'
 import { formatDate } from 'kitto'
@@ -8,6 +8,16 @@ import { breakpoints, fluid, size } from 'kitto/lightningcss'
 import basicSsl from '@vitejs/plugin-basic-ssl'
 
 const { name, version } = JSON.parse(readFileSync(new URL('package.json', import.meta.url), 'utf8'))
+const logger = createLogger()
+const loggerWarn = logger.warn
+
+logger.warn = (msg, options) => {
+	if (msg.includes('vite:css')) {
+		if (msg.includes("'global'")) return
+		if (msg.includes('@view-transition')) return
+	}
+	loggerWarn(msg, options)
+}
 
 export default defineConfig({
 	build: { cssMinify: 'lightningcss' },
@@ -34,5 +44,6 @@ export default defineConfig({
 	},
 	plugins: [sveltekit(), devtoolsJson(), basicSsl()],
 	resolve: { extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.svelte'] },
-	server: { proxy: {} }
+	server: { proxy: {} },
+	customLogger: logger
 })

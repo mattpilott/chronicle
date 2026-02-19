@@ -1,10 +1,14 @@
 import type { PageServerLoad } from './$types'
 import { Octokit } from 'octokit'
 import rss2js from 'rss-to-json'
+import { GITHUB_TOKEN } from '$env/static/private'
+
+const CACHE_TTL_MS = import.meta.env.DEV ? 10 * 60 * 1000 : 5 * 60 * 1000 // 10 min dev, 5 min prod
+let cache: { items: object[]; ts: number } | null = null
 
 // prettier-ignore
 const { rest: { repos: { getContent, listReleases, listCommits }, issues: { getMilestone } } } = new Octokit({
-	auth: import.meta.env.VITE_KEY
+	auth: GITHUB_TOKEN
 })
 
 const githubs = [
@@ -13,8 +17,7 @@ const githubs = [
 		repo: 'svelte',
 		path: 'packages/svelte/CHANGELOG.md',
 		hideH1: true,
-		milestone_number: 10,
-		log: true
+		milestone_number: 10
 	},
 	{ owner: 'sveltejs', repo: 'kit', path: 'packages/kit/CHANGELOG.md', hideH1: true, milestone_number: 7 },
 	{ owner: 'vitejs', repo: 'vite', path: 'packages/vite/CHANGELOG.md', hideH1: true, milestone_number: 28 },
@@ -42,38 +45,37 @@ function fromB64(str) {
 }
 
 export const load = (async () => {
-	const items = await Promise.all(
+	if (cache && Date.now() - cache.ts < CACHE_TTL_MS) {
+		return { items: cache.items }
+	}
+
+	const results = await Promise.allSettled(
 		githubs.map(async github => {
 			if (github.rss) {
-				try {
-					const result = await rss2js.parse(github.rss)
-					const data = []
+				const result = await rss2js.parse(github.rss)
+				const data = []
 
-					result.items.slice(0, github.per_page).forEach(item => {
-						data.push({
-							body: item.description || item.content,
-							href: item.link,
-							title: item.title,
-							date: item.pubDate || item.updated || null // <-- publication date for RSS items
-						})
+				result.items.slice(0, github.per_page).forEach(item => {
+					data.push({
+						body: item.description || item.content,
+						href: item.link,
+						title: item.title,
+						date: item.pubDate || item.updated || null
 					})
+				})
 
-					return {
-						title: github.title,
-						href: github.href,
-						content: data,
-						hideH1: false,
-						changelog: false,
-						rss: true
-					}
-				} catch (e) {
-					return
+				return {
+					title: github.title,
+					href: github.href,
+					content: data,
+					hideH1: false,
+					changelog: false,
+					rss: true
 				}
 			} else {
 				// Fetch changelog content or releases
 				const { data } = github.path ? await getContent(github) : await listReleases(github)
 
-				// Fetch latest commit for last modified date
 				let lastModified = null
 				if (github.path) {
 					try {
@@ -91,15 +93,14 @@ export const load = (async () => {
 
 				const { data: mile } = github.milestone_number ? await getMilestone(github) : { data: false }
 				const body = github.path
-					? summary(fromB64(data.content), github.per_page)
+					? summary(fromB64(data.content), '\n## ', github.per_page)
 					: data.map(i => i.body).join('\n\n')
 
-				if (github.log) console.log(lastModified)
 				return {
 					title: `@${github.owner}/${github.repo}`,
 					href: `https://github.com/${github.owner}/${github.repo}`,
 					body,
-					lastModified, // <-- last modified date from latest commit
+					lastModified,
 					hideH1: github.hideH1,
 					changelog: github.path,
 					mile: mile && {
@@ -114,5 +115,12 @@ export const load = (async () => {
 		})
 	)
 
+	const items = results
+		.filter(r => r.status === 'fulfilled' && r.value != null)
+		.map(r => (r as PromiseFulfilledResult<object>).value)
+
+	if (items.length > 0) {
+		cache = { items, ts: Date.now() }
+	}
 	return { items }
 }) satisfies PageServerLoad

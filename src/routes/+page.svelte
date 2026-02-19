@@ -1,14 +1,11 @@
 <script lang="ts">
-	import { marked } from 'marked'
+	import SvelteMarkdown from '@humanspeak/svelte-markdown'
 	import { invalidateAll } from '$app/navigation'
 	import { onMount } from 'svelte'
 	import { fly } from 'svelte/transition'
 	import { formatDate } from 'kitto'
 
 	let { data } = $props()
-
-	// console.log(data)
-
 	let loading = $state(false)
 	let mounted = $state(false)
 
@@ -27,7 +24,7 @@
 </script>
 
 <section class="row">
-	{#each data?.items as item (item)}
+	{#each data?.items ?? [] as item (item.title + item.href)}
 		{#if item}
 			<div class="col">
 				<div class="header">
@@ -61,7 +58,7 @@
 						{@const text = item.body
 							.replace(/<template>/g, '&lt;template&gt;')
 							.replace(/<\/template>/g, '&lt;/template&gt;')}
-						{@html marked(text)}
+						<SvelteMarkdown source={text} />
 					{:else if item.content}
 						{#each item.content as content, i}
 							<div>
@@ -196,8 +193,12 @@
 	.main {
 		padding: 1rem 1.5rem;
 
-		&.hideH1 :global(h1:not(.title)) {
-			display: none;
+		&.hideH1 {
+			:global {
+				h1:not(.title) {
+					display: none;
+				}
+			}
 		}
 
 		:global {

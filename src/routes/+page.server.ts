@@ -20,7 +20,7 @@ const githubs = [
 		milestone_number: 10
 	},
 	{ owner: 'sveltejs', repo: 'kit', path: 'packages/kit/CHANGELOG.md', hideH1: true, milestone_number: 7 },
-	{ owner: 'vitejs', repo: 'vite', path: 'packages/vite/CHANGELOG.md', hideH1: true, milestone_number: 28 },
+	{ owner: 'vitejs', repo: 'vite', path: 'packages/vite/CHANGELOG.md', hideH1: true, milestone_number: 31 },
 	{
 		rss: 'https://www.figma.com/release-notes/feed/atom.xml',
 		title: 'Figma',
